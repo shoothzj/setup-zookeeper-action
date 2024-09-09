@@ -1,0 +1,15 @@
+name: 'Setup ZooKeeper Action'
+description: 'Setup a ZooKeeper Server'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: start zookeeper
+      run: bash $GITHUB_ACTION_PATH/start_zookeeper.sh
+      shell: bash
+    - name: wait zookeeper start
+      uses: shoothzj/host-available-check-action@v1
+      with:
+        check_type: 'TCP'
+        check_timeout: 30
+        check_tcp_port: 2181
